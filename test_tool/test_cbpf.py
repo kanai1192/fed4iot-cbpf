@@ -39,10 +39,15 @@ def main():
         end_point = 'http://' + REST_HOST + API + str(cmd)
         response = requests.post(end_point, headers=headers, data=data)
 
+        print (response.json())
+
     elif args[1] == "get_result":
         cmd = "/get_result"
         end_point = 'http://' + REST_HOST + API + str(cmd)
         response = requests.get(end_point)
+
+        result = json.loads(response.json())
+        print (json.dumps(result, indent=2))
 
     else:
         cmd = "/face_rec=" + args[1]
@@ -50,7 +55,7 @@ def main():
         end_point = 'http://' + REST_HOST + API + str(cmd)
         response = requests.get(end_point)
 
-    print (response.json())
+        print (response.json())
 
 
 if __name__ == '__main__':

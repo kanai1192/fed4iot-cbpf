@@ -47,11 +47,20 @@ JSON_FILE_PATH = config.json_file_dir + config.json_name
 
 
 def _json_parser(img_name):
-    json_dict = json.loads(json_data)
 
-    json_dict['d_time'] = datetime.now().strftime('%Y%m%d%H%M%S')
-    json_dict['gps_info']['coordinates'] = [32.7899, 130.7425]
-    json_dict['img_name'] = img_name
+    #json_dict = json.loads(json_data)
+
+    #json_dict['d_time'] = datetime.now().strftime('%Y%m%d%H%M%S')
+    #json_dict['gps_info']['coordinates'] = [32.7899, 130.7425]
+    #json_dict['img_name'] = img_name
+
+    json_dict = config.cbpf_data_model
+    timestamp = datetime.now().strftime('%Y-%m-%dT%H:%M:%SZ')
+    json_dict['Camera']['createdAt']['value'] = timestamp
+    json_dict['Camera']['FileName']['value'] = img_name
+
+    json_dict['HumanDetector']['createdAt']['value'] = timestamp
+    json_dict['HumanDetector']['DetectHuman']['value'] = True
 
     json_dumps = json.dumps(json_dict)
 

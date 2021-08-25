@@ -28,6 +28,40 @@ pana_cam_no = "pana_1/"
 #pana_cam_url = 'http://fed4iot:Fed4IoT-JP$@192.168.11.160:80/nphMotionJpeg?Resolution=640x360&Quality=Standar'
 pana_cam_url = 'http://192.168.11.160:8080/nphMotionJpeg?Resolution=640x360&Quality=Standar'
 
+# setting GPS
+cam_long = 130.7425
+cam_lat = 32.7899
+
+# data model
+cbpf_data_model = {'id': 'urn:ngsi-ld:CBPF',
+                   'type': 'CBPF event',
+                   'Camera': 
+                       {'id': {'type': '@id', 'value': 'urn:ngsi-ld:CBPF:camera'},
+                        'type': {'type': '@id', 'value': 'camera'},
+                        'location': {'type': 'GeoProperty', 'value': [cam_lat, cam_long]},
+                        'createdAt': {'type': 'Property', 'value': 'null'},
+                        #'soruce': {'type': 'Property', 'value': pana_cam_url},
+                        'dataProvider': {'type': 'Property', 'value': 'null'},
+                        'entityVesrion': {'type': 'Property', 'value': '1.0'},
+                        'deviceModel': {'type': 'Relationship', 'value': 'panasonic'},
+                        'description': {'type': 'Property', 'value': 'panasonic network camera'},
+                        #'softwareVersion': {'type': 'Property', 'value': '1.0'},
+                        'FileName': {'type': 'Property', 'value': 'null'},
+                       },
+                   'HumanDetector': 
+                       {'id': {'type': '@id', 'value': 'urn:gnsi-ld:CBPF:HumanDetector'},
+                        'type': {'type': '@id', 'value': 'human detector'},
+                        'location': {'type': 'GeoProperty', 'value': [cam_lat, cam_long]},
+                        'createdAt': {'type': 'Property', 'value': 'null'},
+                        #'soruce': {'type': 'Property', 'value': pana_cam_url},
+                        'dataProvider': {'type': 'Property', 'value': 'null'},
+                        'entityVesrion': {'type': 'Property', 'value': '1.0'},
+                        'description': {'type': 'Property', 'value': 'virtual person finder'},
+                        'softwareVersion': {'type': 'Property', 'value': '1.0'},
+                        'DetectHuman': {'type': 'Property', 'value': False},
+                       }
+                   }
+
 # setting image file dir
 img_file_dir = os.path.abspath(os.path.join(root_path, 'image')) + '/'
 
