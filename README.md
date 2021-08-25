@@ -25,8 +25,17 @@ $python3 restapi_main.py
 ## Test script (for TV side)
 ```bash
 $cd ~/fed4iot-cbpf-pana/test_tool/
+$python3 test_cbpf.py start
+(start camera system)
+$python3 test_cbpf.py upload 
+(upload request image file to find a person)
+$python3 test_cbpf.py get_result
+(obtain result)
+$python3 test_cbpf.py close
+(end camera system)
+
 $python3 test_cbpf.py <cmd>
- <cmd>: start, close, get_result
+ <cmd>: start, close, upload, get_result
 ```
 
 ## Data model

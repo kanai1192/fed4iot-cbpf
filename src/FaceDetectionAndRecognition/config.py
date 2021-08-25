@@ -28,15 +28,22 @@ pana_cam_no = "pana_1/"
 #pana_cam_url = 'http://fed4iot:Fed4IoT-JP$@192.168.11.160:80/nphMotionJpeg?Resolution=640x360&Quality=Standar'
 pana_cam_url = 'http://192.168.11.160:8080/nphMotionJpeg?Resolution=640x360&Quality=Standar'
 
+location_name = 'murcia'
+#location_name = 'grasse'
+
 # setting GPS
 cam_long = 130.7425
 cam_lat = 32.7899
 
 # data model
+
+cam_id = 'urn:ngsi-ld:' + location_name + 'camera'
+service_id = 'urn:ngsi-ld:' + location_name + 'HumanDetector'
+
 cbpf_data_model = {'id': 'urn:ngsi-ld:CBPF',
                    'type': 'CBPF event',
                    'Camera': 
-                       {'id': {'type': '@id', 'value': 'urn:ngsi-ld:CBPF:camera'},
+                       {'id': {'type': '@id', 'value': cam_id},
                         'type': {'type': '@id', 'value': 'camera'},
                         'location': {'type': 'GeoProperty', 'value': [cam_lat, cam_long]},
                         'createdAt': {'type': 'Property', 'value': 'null'},
@@ -49,7 +56,7 @@ cbpf_data_model = {'id': 'urn:ngsi-ld:CBPF',
                         'FileName': {'type': 'Property', 'value': 'null'},
                        },
                    'HumanDetector': 
-                       {'id': {'type': '@id', 'value': 'urn:gnsi-ld:CBPF:HumanDetector'},
+                       {'id': {'type': '@id', 'value': service_id},
                         'type': {'type': '@id', 'value': 'human detector'},
                         'location': {'type': 'GeoProperty', 'value': [cam_lat, cam_long]},
                         'createdAt': {'type': 'Property', 'value': 'null'},
