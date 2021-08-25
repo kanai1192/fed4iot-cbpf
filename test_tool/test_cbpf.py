@@ -46,8 +46,11 @@ def main():
         end_point = 'http://' + REST_HOST + API + str(cmd)
         response = requests.get(end_point)
 
-        result = json.loads(response.json())
-        print (json.dumps(result, indent=2))
+        if (response.json() is not None):
+            result = json.loads(response.json())
+            print (json.dumps(result, indent=2))
+        else:
+            print (response.json())
 
     else:
         cmd = "/face_rec=" + args[1]

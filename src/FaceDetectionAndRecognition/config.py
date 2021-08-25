@@ -37,8 +37,8 @@ cam_lat = 32.7899
 
 # data model
 
-cam_id = 'urn:ngsi-ld:' + location_name + 'camera'
-service_id = 'urn:ngsi-ld:' + location_name + 'HumanDetector'
+cam_id = 'urn:ngsi-ld:' + location_name + ':camera'
+service_id = 'urn:ngsi-ld:' + location_name + ':HumanDetector'
 
 cbpf_data_model = {'id': 'urn:ngsi-ld:CBPF',
                    'type': 'CBPF event',
