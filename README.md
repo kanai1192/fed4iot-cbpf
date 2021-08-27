@@ -41,12 +41,20 @@ $python3 test_cbpf.py <cmd>
 ## Data model
 ```bash
 {
-  "id": "urn:ngsi-ld:CBPF",
-  "type": "CBPF event",
+  "@context": {
+      "type": "StructuredValue",
+      "value": [
+              "http://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld",
+              "https://fed4iot.nz.comm.waseda.ac.jp/cbpfOntology/v1/cbpf-context.jsonld"
+               ],
+      "metadata": {}
+  },
+  "@id": "uri:ngsi-ld:CBPF:murcia:1",
+  "type": "CBPF",
   "Camera": {
     "id": {
       "type": "@id",
-      "value": "urn:ngsi-ld:CBPF:camera"
+      "value": "urn:ngsi-ld:CBPF:murcia:camera:1"
     },
     "type": {
       "type": "@id",
@@ -82,47 +90,6 @@ $python3 test_cbpf.py <cmd>
     "FileName": {
       "type": "Property",
       "value": <file name>
-    }
-  },
-  "HumanDetector": {
-    "id": {
-      "type": "@id",
-      "value": "urn:gnsi-ld:CBPF:HumanDetector"
-    },
-    "type": {
-      "type": "@id",
-      "value": "human detector"
-    },
-    "location": {
-      "type": "GeoProperty",
-      "value": [
-        <latitude>,
-        <longitude>
-      ]
-    },
-    "createdAt": {
-      "type": "Property",
-      "value": <datetime>
-    },
-    "dataProvider": {
-      "type": "Property",
-      "value": <value>
-    },
-    "entityVesrion": {
-      "type": "Property",
-      "value": "1.0"
-    },
-    "description": {
-      "type": "Property",
-      "value": "virtual person finder"
-    },
-    "softwareVersion": {
-      "type": "Property",
-      "value": "1.0"
-    },
-    "DetectHuman": {
-      "type": "Property",
-      "value": <boolean>
     }
   }
 }

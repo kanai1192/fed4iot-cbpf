@@ -37,11 +37,18 @@ cam_lat = 32.7899
 
 # data model
 
-cam_id = 'urn:ngsi-ld:' + location_name + ':camera'
-service_id = 'urn:ngsi-ld:' + location_name + ':HumanDetector'
+cam_id = 'urn:ngsi-ld:' + location_name + ':camera:01'
+#service_id = 'urn:ngsi-ld:' + location_name + ':FaceFeatureDetector:01'
 
-cbpf_data_model = {'id': 'urn:ngsi-ld:CBPF',
-                   'type': 'CBPF event',
+cbpf_data_model = {'@context': {
+                        'type': 'StructuredValue',
+                        'value': [
+                          'http://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld',
+                          'https://fed4iot.nz.comm.waseda.ac.jp/cbpfOntology/v1/cbpf-context.jsonld'
+                          ]
+                        },
+                   '@id': 'urn:ngsi-ld:CBPF' + location_name + ':01',
+                   'type': 'CBPF',
                    'Camera': 
                        {'id': {'type': '@id', 'value': cam_id},
                         'type': {'type': '@id', 'value': 'camera'},
@@ -50,24 +57,38 @@ cbpf_data_model = {'id': 'urn:ngsi-ld:CBPF',
                         #'soruce': {'type': 'Property', 'value': pana_cam_url},
                         'dataProvider': {'type': 'Property', 'value': 'null'},
                         'entityVesrion': {'type': 'Property', 'value': '1.0'},
-                        'deviceModel': {'type': 'Relationship', 'value': 'panasonic'},
+                        'deviceModel': {'type': 'Relationship', 'value': 'WV-S1131'},
                         'description': {'type': 'Property', 'value': 'panasonic network camera'},
                         #'softwareVersion': {'type': 'Property', 'value': '1.0'},
                         'FileName': {'type': 'Property', 'value': 'null'},
-                       },
-                   'HumanDetector': 
-                       {'id': {'type': '@id', 'value': service_id},
-                        'type': {'type': '@id', 'value': 'human detector'},
-                        'location': {'type': 'GeoProperty', 'value': [cam_lat, cam_long]},
-                        'createdAt': {'type': 'Property', 'value': 'null'},
-                        #'soruce': {'type': 'Property', 'value': pana_cam_url},
-                        'dataProvider': {'type': 'Property', 'value': 'null'},
-                        'entityVesrion': {'type': 'Property', 'value': '1.0'},
-                        'description': {'type': 'Property', 'value': 'virtual person finder'},
-                        'softwareVersion': {'type': 'Property', 'value': '1.0'},
-                        'DetectHuman': {'type': 'Property', 'value': False},
                        }
                    }
+                   #'HumanDetector': 
+                   #    {'id': {'type': '@id', 'value': service_id},
+                   #     'type': {'type': '@id', 'value': 'human detector'},
+                   #     'location': {'type': 'GeoProperty', 'value': [cam_lat, cam_long]},
+                   #     'createdAt': {'type': 'Property', 'value': 'null'},
+                   #     #'soruce': {'type': 'Property', 'value': pana_cam_url},
+                   #     'dataProvider': {'type': 'Property', 'value': 'null'},
+                   #     'entityVesrion': {'type': 'Property', 'value': '1.0'},
+                   #     'description': {'type': 'Property', 'value': 'virtual person finder'},
+                   #     'softwareVersion': {'type': 'Property', 'value': '1.0'},
+                   #     'DetectHuman': {'type': 'Property', 'value': False},
+                   #    }
+                   #},
+                   #'FaceFeatureDetector':
+                   #    {'id': {'type': '@id', 'value': service_id},
+                   #     'type': {'type': '@id', 'value': 'human detector'},
+                   #     'location': {'type': 'GeoProperty', 'value': [cam_lat, cam_long]},
+                   #     'createdAt': {'type': 'Property', 'value': 'null'},
+                   #     #'soruce': {'type': 'Property', 'value': pana_cam_url},
+                   #     'dataProvider': {'type': 'Property', 'value': 'null'},
+                   #     'entityVesrion': {'type': 'Property', 'value': '1.0'},
+                   #     'description': {'type': 'Property', 'value': 'virtual person finder'},
+                   #     'softwareVersion': {'type': 'Property', 'value': '1.0'},
+                   #    }
+                   #}
+
 
 # setting image file dir
 img_file_dir = os.path.abspath(os.path.join(root_path, 'image')) + '/'
