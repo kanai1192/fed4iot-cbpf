@@ -47,7 +47,7 @@ cbpf_data_model = {'@context': {
                           'https://fed4iot.nz.comm.waseda.ac.jp/cbpfOntology/v1/cbpf-context.jsonld'
                           ]
                         },
-                   '@id': 'urn:ngsi-ld:CBPF' + location_name + ':01',
+                   '@id': 'urn:ngsi-ld:CBPF:' + location_name + ':01',
                    'type': 'CBPF',
                    'Camera': 
                        {'id': {'type': '@id', 'value': cam_id},

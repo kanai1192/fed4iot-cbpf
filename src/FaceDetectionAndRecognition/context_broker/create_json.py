@@ -59,8 +59,8 @@ def _json_parser(img_name):
     json_dict['Camera']['createdAt']['value'] = timestamp
     json_dict['Camera']['FileName']['value'] = img_name
 
-    json_dict['HumanDetector']['createdAt']['value'] = timestamp
-    json_dict['HumanDetector']['DetectHuman']['value'] = True
+    #json_dict['HumanDetector']['createdAt']['value'] = timestamp
+    #json_dict['HumanDetector']['DetectHuman']['value'] = True
 
     json_dumps = json.dumps(json_dict)
 
