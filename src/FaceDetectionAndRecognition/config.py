@@ -28,7 +28,8 @@ pana_cam_no = "pana_1/"
 #pana_cam_url = 'http://fed4iot:Fed4IoT-JP$@192.168.11.160:80/nphMotionJpeg?Resolution=640x360&Quality=Standar'
 pana_cam_url = 'http://192.168.11.160:8080/nphMotionJpeg?Resolution=640x360&Quality=Standar'
 
-location_name = 'murcia'
+location_name = 'tokyo'
+#location_name = 'murcia'
 #location_name = 'grasse'
 
 # setting GPS
@@ -47,11 +48,11 @@ cbpf_data_model = {'@context': {
                           'https://fed4iot.nz.comm.waseda.ac.jp/cbpfOntology/v1/cbpf-context.jsonld'
                           ]
                         },
-                   '@id': 'urn:ngsi-ld:CBPF:' + location_name + ':01',
-                   'type': 'CBPF',
-                   'Camera': 
-                       {'id': {'type': '@id', 'value': cam_id},
-                        'type': {'type': '@id', 'value': 'camera'},
+                   'id': 'urn:ngsi-ld:cbpf:' + location_name + ':01',
+                   'type': 'cbpf',
+                   'msg': 
+                       {#'id': {'type': '@id', 'value': cam_id},
+                        #'type': {'type': '@id', 'value': 'camera'},
                         'location': {'type': 'GeoProperty', 'value': [cam_lat, cam_long]},
                         'createdAt': {'type': 'Property', 'value': 'null'},
                         #'soruce': {'type': 'Property', 'value': pana_cam_url},

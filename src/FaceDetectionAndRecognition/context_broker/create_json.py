@@ -56,8 +56,8 @@ def _json_parser(img_name):
 
     json_dict = config.cbpf_data_model
     timestamp = datetime.now().strftime('%Y-%m-%dT%H:%M:%SZ')
-    json_dict['Camera']['createdAt']['value'] = timestamp
-    json_dict['Camera']['FileName']['value'] = img_name
+    json_dict['msg']['createdAt']['value'] = timestamp
+    json_dict['msg']['FileName']['value'] = img_name
 
     #json_dict['HumanDetector']['createdAt']['value'] = timestamp
     #json_dict['HumanDetector']['DetectHuman']['value'] = True
