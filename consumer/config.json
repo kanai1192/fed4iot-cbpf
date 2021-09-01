@@ -1,0 +1,14 @@
+{"tv num": 1,
+ "silo num": 1,
+ "producer rate": 10,
+ "flavour": "mqtt",
+ "mobius silo": "http",
+ "tv zone": "default",
+ "flav zone": "default",
+ "con ip": "192.168.11.26",
+ "mapping": "OneToOne",
+ "exp time": 120,
+ "deploy": "k8s",
+ "tenant": "takahashi",
+ "master controller": "http://192.168.11.101:30847"
+}
