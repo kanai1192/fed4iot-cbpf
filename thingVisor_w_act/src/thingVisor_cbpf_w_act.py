@@ -41,39 +41,173 @@ class mqttDataThread(Thread):
         result = ""
 
         mqtt_data_client.connect(MQTT_data_broker_IP, MQTT_data_broker_port, 30)
-        #mqtt_data_client.loop_forever()
+        mqtt_data_client.message_callback_add(v_thing_topic + "/" + data_in_suffix,
+                                              self.on_message_data_in_vThing)
+        mqtt_data_client.subscribe(v_thing_topic + "/" + data_in_suffix)
+        mqtt_data_client.loop_forever()
  
+    def get_data_from_root():
+
         ### get data from camera virtualization system
-        while True:
+        API = "/api/get_result"
+        end_point = camera_end_point + API
 
-            API = "/api/get_result"
-            end_point = camera_end_point + API
+        try:
+            response = requests.get(end_point)
+            json_response = response.json()
 
-            try:
-                response = requests.get(end_point)
-                json_response = response.json()
-
-                if (json_response is not None):
-                    result = json.loads(json_response)
-                else:
-                    result = json_response
-                    pass
+            if (json_response is not None):
+                result = json.loads(json_response)
+            else:
+                result = json_response
+            pass
             
-                if result['msg']['createdAt']['value'] != 'null':
-                    ngsiLdEntity1 = result
-                    context_vThing.update([ngsiLdEntity1])
-                    message = {"data": [ngsiLdEntity1], "meta": {"vThingID": v_thing_ID}}
-                    print("topic name: " + v_thing_topic + '/' + data_out_suffix + " ,message: " + json.dumps(message))
-                    mqtt_data_client.publish(v_thing_topic + '/' + data_out_suffix,json.dumps(message))
-                else:
-                    print ("there is no data")
+            if result['msg']['createdAt']['value'] != 'null':
+                ngsiLdEntity1 = result
+                context_vThing.update([ngsiLdEntity1])
+                message = {"data": [ngsiLdEntity1], "meta": {"vThingID": v_thing_ID}}
+                print("topic name: " + v_thing_topic + '/' + data_out_suffix + " ,message: " + json.dumps(message))
+                mqtt_data_client.publish(v_thing_topic + '/' + data_out_suffix,json.dumps(message))
+            else:
+                print ("there is no data")
+                pass
 
-            except requests.exceptions.RequestException as e:
-                print ("request error: ", e)
+        except requests.exceptions.RequestException as e:
+            print ("request error: ", e)
 
-            next_time = ((base_time - time.time()) % request_rate) or request_rate
-            time.sleep(next_time)
+    def send_commandResult(self, cmd_name, cmd_info, id_LD, result_code):
+        pname = cmd_name+"-result"
+        pvalue = cmd_info.copy()
+        pvalue['cmd-result'] = result_code
+        ngsiLdEntityResult = {"id": id_LD,
+                                "type": v_thing_type_attr,
+                                pname: {"type": "Property", "value": pvalue},
+                                "@context": [ "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld" ]
+                                }
+        data = [ngsiLdEntityResult]
+        # LampActuatorContext.update(data)
 
+        message = {"data": data, "meta": {
+            "vThingID": v_thing_ID}}  # neutral-format message
+        if "cmd-nuri" in cmd_info:
+            if cmd_info['cmd-nuri'].startswith("viriot://"):
+                topic = cmd_info['cmd-nuri'][len("viriot://"):]
+                self.publish(message, topic)
+            else:
+                self.publish(message)
+        else:
+            self.publish(message)
+
+    def send_commandStatus(self, cmd_name, cmd_info, id_LD, status_code):
+        pname = cmd_name+"-status"
+        pvalue = cmd_info.copy()
+        pvalue['cmd-status'] = status_code
+        ngsiLdEntityStatus = {"id": id_LD,
+                                "type": v_thing_type_attr,
+                                pname: {"type": "Property", "value": pvalue},
+                                "@context": [ "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld" ]
+                                }
+        data = [ngsiLdEntityStatus]
+
+        message = {"data": data, "meta": {
+            "vThingID": v_thing_ID}}  # neutral-format message
+        if "cmd-nuri" in cmd_info:
+            if cmd_info['cmd-nuri'].startswith("viriot://"):
+                topic = cmd_info['cmd-nuri'][len("viriot://"):]
+                self.publish(message, topic)
+            else:
+                self.publish(message)
+        else:
+            self.publish(message)
+
+    def receive_commandRequest(self, cmd_entity):
+        try:
+            #jsonschema.validate(data, commandRequestSchema)
+            id_LD = cmd_entity["id"]
+            for cmd_name in commands:
+                if cmd_name in cmd_entity:
+                    cmd_info = cmd_entity[cmd_name]['value']
+                    fname = cmd_name.replace('-','_')
+                    fname = "on_"+fname
+                    f=getattr(self,fname)
+                    if "cmd-qos" in cmd_info:
+                        if int(cmd_info['cmd-qos']) == 2:
+                            self.send_commandStatus(cmd_name, cmd_info, id_LD, "PENDING")
+                    future = executor.submit(f, cmd_name, cmd_info, id_LD, self)
+
+
+        #except jsonschema.exceptions.ValidationError as e:
+            #print("received commandRequest got a schema validation error: ", e)
+        #except jsonschema.exceptions.SchemaError as e:
+            #print("commandRequest schema not valid:", e)
+        except Exception as ex:
+            traceback.print_exc()
+        return
+
+    def on_set_color(self, cmd_name, cmd_info, id_LD, actuatorThread):
+        global LampActuatorContext
+        # function to change the color of the Lamp should be written here
+        # update the Context, publish new actuator status on data_out, send result
+        ngsiLdEntity = {"id": id_LD,
+                        "type": v_thing_type_attr,
+                        "color": {"type": "Property", "value": cmd_info['cmd-value']},
+                        "@context": [ "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld" ]
+                        }
+        data = [ngsiLdEntity]
+        LampActuatorContext.update(data)
+
+        # publish changed status
+        message = {"data": data, "meta": {
+            "vThingID": v_thing_ID}}  # neutral-format
+        self.publish(message)
+
+        # publish command result
+        if "cmd-qos" in cmd_info:
+            if int(cmd_info['cmd-qos']) > 0:
+                self.send_commandResult(cmd_name, cmd_info, id_LD, "OK")
+
+
+    def on_set_status(self, cmd_name, cmd_info, id_LD, actuatorThread):
+        global LampActuatorContext
+        # function to change the status of the Lamp should be written here
+        # update the Context, publish new actuator status on data_out, send result
+        ngsiLdEntity = {"id": id_LD,
+                        "type": v_thing_type_attr,
+                        "status": {"type": "Property", "value": cmd_info['cmd-value']},
+                        "@context": [ "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld" ]
+                        }
+        data = [ngsiLdEntity]
+        LampActuatorContext.update(data)
+
+        # publish changed status
+        message = {"data": data, "meta": {
+            "vThingID": v_thing_ID}}  # neutral-format message
+        self.publish(message)
+
+        # publish command result
+        if "cmd-qos" in cmd_info:
+            if int(cmd_info['cmd-qos']) > 0:
+                self.send_commandResult(cmd_name, cmd_info, id_LD, "OK")
+
+    def on_message_data_in_vThing(self, mosq, obj, msg):
+        payload = msg.payload.decode("utf-8", "ignore")
+        print("Message received on "+msg.topic + "\n" + payload+"\n")
+        jres = json.loads(payload.replace("\'", "\""))
+        try:
+            data = jres["data"]
+            for entity in data:
+                id_LD = entity["id"]
+                if id_LD != v_thing_ID_LD:
+                    print("Entity not handled by the Thingvisor, message dropped")
+                    continue
+                for cmd in commands:
+                    if cmd in entity:
+                        self.receive_commandRequest(entity)
+                        continue
+            return
+        except Exception as ex:
+            traceback.print_exc()
+        return
 '''
 class mqttRxThread(Thread):
     # mqtt client used for receiving and sending data
