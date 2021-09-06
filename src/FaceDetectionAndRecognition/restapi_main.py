@@ -19,6 +19,8 @@ import find_face_recognition, config
 import werkzeug
 from flask import Flask, request, jsonify, render_template
 from werkzeug.utils import secure_filename
+import config
+import subprocess
 
 api = Flask(__name__)
 
@@ -151,11 +153,14 @@ def remove_img(img_name):
     if img_name:
 
         if img_name == 'all':
-            file_list = glob.glob(os.path.join(REMOVE_DIR, '*.*'))
-            print(file_list)
 
-            for file in file_list:
-                os.remove(file)
+            result = subprocess.run(['./reset.sh'], shell=True, check=True)
+
+            #file_list = glob.glob(os.path.join(REMOVE_DIR, '*.*'))
+            #print(file_list)
+
+            #for file in file_list:
+            #    os.remove(file)
 
             return jsonify({"api result": "All image files is removed!"})
 
@@ -192,7 +197,9 @@ def return_result():
         
         else:
             print ("face is not detected")
-            send_json = None
+            send_json = config.cbpf_data_model
+            #send_json_null['msg'] = "null"
+            send_json = json.dumps(send_json)
 
         return jsonify(send_json)
 
