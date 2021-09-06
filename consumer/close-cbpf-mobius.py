@@ -6,7 +6,7 @@ import base64
 
 #url = "http://172.17.0.4:7579/Mobius/helloWorldActuator:Lamp01/helloWorldActuator:Lamp01/set-color"
 #url = "http://192.168.11.101:31910/Mobius/helloworldtv:Lamp01/helloworldtv:Lamp01/set-color"
-url = "http://192.168.11.101:31910/Mobius/cbpfact:tokyo:01/cbpfact:tokyo:01/start"
+url = "http://192.168.11.101:31910/Mobius/cbpf:tokyo:01/cbpf:tokyo:01/close"
 
 #url = "http://192.168.11.101:31910/Mobius/cbpfact:tokyo:01/cbpfact:tokyo:01"
 
@@ -26,7 +26,7 @@ params = {"content": {"value": binImg},
 payload = {
     "m2m:cin": {
         "con": {
-				"cmd-value":"start",
+				"cmd-value":"close",
 				"cmd-qos":"2",
                                 #"cmd-params": params
 				#"cmd-id":"123456",

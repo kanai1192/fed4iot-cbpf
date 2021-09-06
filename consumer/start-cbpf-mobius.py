@@ -6,7 +6,7 @@ import base64
 
 #url = "http://172.17.0.4:7579/Mobius/helloWorldActuator:Lamp01/helloWorldActuator:Lamp01/set-color"
 #url = "http://192.168.11.101:31910/Mobius/helloworldtv:Lamp01/helloworldtv:Lamp01/set-color"
-url = "http://192.168.11.101:31910/Mobius/cbpfact:tokyo:01/cbpfact:tokyo:01/start"
+url = "http://192.168.11.101:31910/Mobius/cbpf:tokyo:01/cbpf:tokyo:01/start"
 
 #url = "http://192.168.11.101:31910/Mobius/cbpfact:tokyo:01/cbpfact:tokyo:01"
 
@@ -14,21 +14,22 @@ url = "http://192.168.11.101:31910/Mobius/cbpfact:tokyo:01/cbpfact:tokyo:01/star
 
 #url = "http://192.168.11.101:31910/Mobius/helloworldtv:Lamp01"
 
-testImg = "../test_tool/test.jpg"
+testImgDir = "../test_tool/"
+testImgName = "test.jpg"
 
-with open(testImg, 'rb') as f:
+with open(testImgDir+testImgName, 'rb') as f:
     srcImg = f.read()
 
 binImg = base64.b64encode(srcImg).decode('utf-8')
 params = {"content": {"value": binImg},
-          "file name": {"value": testImg}}
+          "file name": {"value": testImgName}}
 
 payload = {
     "m2m:cin": {
         "con": {
 				"cmd-value":"start",
 				"cmd-qos":"2",
-                                #"cmd-params": params
+                                "cmd-params": params
 				#"cmd-id":"123456",
     
 				}
