@@ -7,7 +7,7 @@ datetime：2021.2.20
 # -*- coding: utf-8 -*-
 # import re
 import json
-from datetime import datetime
+import datetime
 import config
 
 
@@ -40,6 +40,7 @@ json_data1 = '''{
 
 JSON_FILE_PATH = config.json_file_dir + config.json_name
 
+UTC = datetime.timezone.utc
 
 # DATE_KEY = re.compile(r'date_time$')
 # IMG_URI = re.compile(r'IMG_URI$')
@@ -55,7 +56,11 @@ def _json_parser(img_name):
     #json_dict['img_name'] = img_name
 
     json_dict = config.cbpf_data_model
-    timestamp = datetime.now().strftime('%Y-%m-%dT%H:%M:%SZ')
+
+    print (json_dict)
+    print (type(json_dict))
+
+    timestamp = datetime.datetime.now(UTC).strftime('%Y-%m-%dT%H:%M:%SZ')
     json_dict['msg']['createdAt']['value'] = timestamp
     json_dict['msg']['FileName']['value'] = img_name
 
@@ -72,8 +77,8 @@ def get_json_data(img_name):
     img_uri = img_name
 
     print("JSON_FILE_PATH", JSON_FILE_PATH)
-    with open(JSON_FILE_PATH, 'w') as file_obj:
-        json_dumps = _json_parser(img_uri)
+    #with open(JSON_FILE_PATH, 'w') as file_obj:
+    json_dumps = _json_parser(img_uri)
 
     return json_dumps
 

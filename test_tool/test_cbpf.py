@@ -28,7 +28,7 @@ def main():
     
     if (len(args) != 2):
         print ("[Usage] python3 **.py <cmd>")
-        print ("start, close, upload, get_result")
+        print ("start, close, upload, get_result, remove")
         sys.exit(1)
 
     if args[1] == "upload":
@@ -51,6 +51,13 @@ def main():
             print (json.dumps(result, indent=2))
         else:
             print (response.json())
+
+    elif args[1] == "remove":
+        cmd = "/remove_img=all"
+        end_point = 'http://' + REST_HOST + API + str(cmd)
+        response = requests.get(end_point)
+
+        print (response.json())
 
     else:
         cmd = "/face_rec=" + args[1]

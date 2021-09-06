@@ -38,7 +38,7 @@ cam_lat = 32.7899
 
 # data model
 
-cam_id = 'urn:ngsi-ld:' + location_name + ':camera:01'
+#cam_id = 'urn:ngsi-ld:' + location_name + ':camera:01'
 #service_id = 'urn:ngsi-ld:' + location_name + ':FaceFeatureDetector:01'
 
 cbpf_data_model = {'@context': {
