@@ -59,7 +59,7 @@ class oneM2MMQTTSiloThread(Thread):
 
     def on_receive_MQTT(self,mosq, obj, msg):
         payload = msg.payload.decode("utf-8", "ignore")
-        print (payload)
+        #print (payload)
         try:
             jres = json.loads(payload)
             rqi = jres['rqi']
@@ -120,25 +120,25 @@ def on_receive(jres):
             #####
 
             samples = samples + 1
-            #print(str(jres['m2m:sgn']['nev']['rep']['m2m:cin']['con']))
-            # con = json.loads(jres['m2m:sgn']['nev']['rep']['m2m:cin']['con'])
-            con = jres['m2m:sgn']['nev']['rep']['m2m:cin']['con']
-            send_timestamp = con['value']['timestamp']
-            msg_num = con['value']['sqn']
+            print(str(jres['m2m:sgn']['nev']['rep']['m2m:cin']['con']))
+             #con = json.loads(jres['m2m:sgn']['nev']['rep']['m2m:cin']['con'])
+            #con = jres['m2m:sgn']['nev']['rep']['m2m:cin']['con']
+            #send_timestamp = con['value']['timestamp']
+            #msg_num = con['value']['sqn']
             
-            delta_timestamp = received_timestamp - send_timestamp
-            total_timestamp += delta_timestamp
+            #delta_timestamp = received_timestamp - send_timestamp
+            #total_timestamp += delta_timestamp
 
             # added by kenji for saving log
-            with open(log_name, 'a') as f:
-                writer = csv.writer(f)
-                writer.writerow([str(log_timestamp), 'mobius2', msg_num, delta_timestamp, total_timestamp/samples])
+            #with open(log_name, 'a') as f:
+            #    writer = csv.writer(f)
+            #    writer.writerow([str(log_timestamp), 'mobius2', msg_num, delta_timestamp, total_timestamp/samples])
             ######
 
-            print("msg: %d, delta timestamp %.4f (ms), average: %.4f" % (msg_num, delta_timestamp, total_timestamp/samples))
-            if csvFile is not None:
-                csvFile.write("%d \t %.4f \t %.4f \n" % (msg_num, delta_timestamp, self.total_timestamp/self.samples))
-                csvFile.flush()
+            #print("msg: %d, delta timestamp %.4f (ms), average: %.4f" % (msg_num, delta_timestamp, total_timestamp/samples))
+            #if csvFile is not None:
+            #    csvFile.write("%d \t %.4f \t %.4f \n" % (msg_num, delta_timestamp, self.total_timestamp/self.samples))
+            #    csvFile.flush()
             return 'OK', 201
         else:
             print("Bad notification format")

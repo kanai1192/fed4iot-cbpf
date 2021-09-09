@@ -6,9 +6,9 @@ import base64
 
 #url = "http://172.17.0.4:7579/Mobius/helloWorldActuator:Lamp01/helloWorldActuator:Lamp01/set-color"
 #url = "http://192.168.11.101:31910/Mobius/helloworldtv:Lamp01/helloworldtv:Lamp01/set-color"
-url = "http://192.168.11.101:31910/Mobius/cbpfact:tokyo:01/cbpfact:tokyo:01/start"
+#url = "http://192.168.11.101:31910/Mobius/cbpfact:tokyo:01/cbpfact:tokyo:01/start"
 
-#url = "http://192.168.11.101:31910/Mobius/cbpfact:tokyo:01/cbpfact:tokyo:01"
+url = "http://192.168.11.101:31910/Mobius/cbpf:tokyo:01/cbpf:tokyo:01/msg"
 
 #url = "http://192.168.11.101:31910/Mobius/cbpfact:tokyo:01"
 
@@ -44,7 +44,8 @@ headers = {
         'cache-control': "no-cache",
 }
 
-response = requests.request("POST", url, headers=headers, data = json.dumps(payload))
-#response = requests.request("GET", url, headers=headers)
+
+#response = requests.request("POST", url, headers=headers, data = json.dumps(payload))
+response = requests.request("GET", url, headers=headers)
 
 print(response.text.encode('utf8'))
