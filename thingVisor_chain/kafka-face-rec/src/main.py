@@ -77,16 +77,16 @@ if __name__ == '__main__':
     #args = sys.argv
     #common.checkARG(len(args))
 
-    os.environ['TOPIC'] = "kafka:/findface/humandetector/tokyo.01"
+    #os.environ['TOPIC'] = "kafka:/findface/humandetector/tokyo.01"
     #os.environ['TAG'] = "person"
     #os.environ['TAR'] = "yolo"
-    os.environ['BROKER'] = '133.9.250.211:9092'
-    os.environ['CONTROL'] = '133.9.250.209:9092'
-    os.environ['SERVICE'] = 'findface'
-    os.environ['CLUSTER'] = 'slab'
-    os.environ['PROTOCOL'] = 'kafka'
-    os.environ['ID'] = 'test'
-    os.environ['NAMESPACE'] = 'test'
+    #os.environ['BROKER'] = '133.9.250.211:9092'
+    #os.environ['CONTROL'] = '133.9.250.209:9092'
+    #os.environ['SERVICE'] = 'findface'
+    #os.environ['CLUSTER'] = 'slab'
+    #os.environ['PROTOCOL'] = 'kafka'
+    #os.environ['ID'] = 'test'
+    #os.environ['NAMESPACE'] = 'test'
     os.environ['KILLSWITCH'] = 'off'
 
     interest = os.environ['TOPIC']
@@ -289,22 +289,22 @@ if __name__ == '__main__':
 
                 ### extract timestamp
                 #tar_name = interest.split('/')[2]
-                #tx_ts = rxData[tar_name]['timestamp']
-                #start_get = datetime.datetime.strptime(tx_ts, '%Y-%m-%dT%H:%M:%S.%fZ').replace(tzinfo=datetime.timezone.utc)
+                tx_ts = rxData['msg']['createdAt']['value']
+                start_get = datetime.datetime.strptime(tx_ts, '%Y-%m-%dT%H:%M:%S.%fZ').replace(tzinfo=datetime.timezone.utc)
                 ###
 
                 #call service function
-                #start_sf = datetime.datetime.now(UTC)
+                start_sf = datetime.datetime.now(UTC)
                 ARGS = {'target tag': targetTag, 'target service': targetSer}
 
                 procData = face_find.callService(interest, rxData, ARGS)
 
-                #end_sf = datetime.datetime.now(UTC)
+                end_sf = datetime.datetime.now(UTC)
                 #pub_size = sys.getsizeof(procData)
 
                 #publish content
                 TOPIC_PUB = funcList[1] + "_" + funcList[2]
-                #start_pub = datetime.datetime.now(UTC)
+                start_pub = datetime.datetime.now(UTC)
                 #procData[funcList[1]].update({'id': str(UUID), 'timestamp': convertTime(start_pub)})
                 procData = json.dumps(procData)
                 pub_size = sys.getsizeof(procData)
@@ -319,24 +319,24 @@ if __name__ == '__main__':
                 #common.printExtractRawData(procData, interest)
                 logger.info("[main] publish complete!")
 
-                #time_get = (end_get - start_get).total_seconds()
-                #time_sf = (end_sf - start_sf).total_seconds()
-                #time_pub = (end_pub - start_pub).total_seconds()
+                time_get = (end_get - start_get).total_seconds()
+                time_sf = (end_sf - start_sf).total_seconds()
+                time_pub = (end_pub - start_pub).total_seconds()
     
-                #sf_log = {"node id": str(UUID), "service id": funcList[1], "service name": SERVICE, "cluster": CLUSTER,
-                #        "interest": {"in": funcList[2], "out": funcList[1]+"_"+funcList[2]}, "protocol": PROTOCOL,
-                #        "timestamp": {"in": convertTime(end_get), "out": convertTime(end_pub)},
-                #        "delay": {"get time": time_get, "proc time": time_sf, "pub time": time_pub},
-                #        "data size": {"get size": get_size, "pub size": pub_size},
-                #        "metric": {"in": in_metric, "out": out_metric},
-                #        "namespace": NAMESPACE
-                #         }
+                sf_log = {"node id": str(UUID), "service id": funcList[1], "service name": SERVICE, "cluster": CLUSTER,
+                        "interest": {"in": funcList[2], "out": funcList[1]+"_"+funcList[2]}, "protocol": PROTOCOL,
+                        "timestamp": {"in": convertTime(end_get), "out": convertTime(end_pub)},
+                        "delay": {"get time": time_get, "proc time": time_sf, "pub time": time_pub},
+                        "data size": {"get size": get_size, "pub size": pub_size},
+                        "metric": {"in": in_metric, "out": out_metric},
+                        "namespace": NAMESPACE
+                         }
  
                 #sf_log = json.dumps(sf_log)
 
-                #to_logger = {"id": str(UUID), "type": "log", "name": TOPIC_OUT, "timestamp": convertTime(end_get), "content": sf_log}
-                #to_logger = json.dumps(to_logger)
+                to_logger = {"id": str(UUID), "type": "log", "name": TOPIC_OUT, "timestamp": convertTime(end_get), "content": sf_log}
+                to_logger = json.dumps(to_logger)
 
                 #logger.info("[main] performance {}".format(qosData))
-                #thread1 = threading.Thread(target=kafka.kafkaPubContent, args=([kafkaController, to_logger, TOPIC_OUT]))
-                #thread1.start()
+                thread1 = threading.Thread(target=kafka.kafkaPubContent, args=([kafkaController, to_logger, TOPIC_OUT]))
+                thread1.start()

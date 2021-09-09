@@ -68,7 +68,7 @@ def callService(interest, rxData, ARGS):
 
     f_img = open(temp, 'rb')
     result = face_detect(f_img)
-    timestamp = datetime.datetime.now(UTC).strftime('%Y-%m-%dT%H:%M:%SZ')
+    timestamp = datetime.datetime.now(UTC).strftime('%Y-%m-%dT%H:%M:%S.%fZ')
 
     _cbpf_data_model = cbpf_data_model
 
