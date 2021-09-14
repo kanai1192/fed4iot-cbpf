@@ -28,8 +28,8 @@ def main():
 
     if (len(cmd) != 6):
         print("please input propert arguments")
-        print("[Usage] $python3 **.py <vsilo ip> <vsilo port> <vthing name> <command> <request image name>")
-        print("[example] $python3 **.py vm1 31315 cbpf-murcia/cbpf/01 start test.jpg")
+        print("[Usage] $python3 **.py <vsilo ip> <vsilo port> <vthing name> <request image name> <command>")
+        print("[example] $python3 **.py vm1 30141 cbpf-murcia/cbpf/01 test.jpg start")
         print("Available commands: <start> and <close>")
         sys.exit(-1)
     else:
@@ -38,32 +38,36 @@ def main():
     vsilo_ip = cmd[1]
     vsilo_port = cmd[2]
     v_thing_name = cmd[3].replace('/', ':')
-    command = cmd[4]
-    request_img = cmd[5]
+    request_img = cmd[4]
+    command = cmd[5]
 
     end_point = "http://"+vsilo_ip+":"+vsilo_port+"/Mobius/"+v_thing_name+"/"+v_thing_name
 
+    print (end_point)
+
     if command == "close":
-        act_cmd = end_point + "/" + command
-        payload['con']['cmd-value'] = command 
+        url = end_point + "/" + command
+        payload['m2m:cin']['con']['cmd-value'] = command 
 
     elif command == "start":
-        act_cmd = end_point + "/" + command
+        url = end_point + "/" + command
 
-        with open(testImgDir+testImgName, 'rb') as f:
+        with open(request_img, 'rb') as f:
             srcImg = f.read()
 
         binImg = base64.b64encode(srcImg).decode('utf-8')
         params = {"content": {"value": binImg},
-                "file name": {"value": testImgName}}
+                "file name": {"value": request_img}}
 
-        payload['con']['cmd-value'] = command
-        payload['con']['cmd-params'] = params
+        payload['m2m:cin']['con']['cmd-value'] = command
+        payload['m2m:cin']['con']['cmd-params'] = params
 
     else:
         print ("input command is not available") 
         sys.exit(-1)
     
+    print (url)
+
     response = requests.request("POST", url, headers=headers, data = json.dumps(payload))
 
     print(response.text.encode('utf8'))
