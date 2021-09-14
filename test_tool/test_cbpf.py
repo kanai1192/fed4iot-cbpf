@@ -3,7 +3,9 @@ import sys
 import base64
 import json
 
-REST_HOST = "192.168.11.101:5000"
+#REST_HOST = "192.168.11.101:5000"
+#REST_HOST = "155.54.95.164:5000"
+REST_HOST = "116.94.156.122:9092"
 API = "/api"
 
 testImg = "test.jpg"
