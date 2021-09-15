@@ -28,15 +28,16 @@ pana_cam_no = "pana_1/"
 #pana_cam_url = 'http://fed4iot:Fed4IoT-JP$@192.168.11.160:80/nphMotionJpeg?Resolution=640x360&Quality=Standar'
 pana_cam_url = 'http://192.168.11.160:8080/nphMotionJpeg?Resolution=640x360&Quality=Standar'
 
-data_provider = 'fed4iot'
-
-location_name = 'tokyo'
+#location_name = 'tokyo'
 #location_name = 'murcia'
 #location_name = 'grasse'
+location_name = 'kumamoto'
+
+data_provider = location_name
 
 # setting GPS
-cam_long = 130.7425
-cam_lat = 32.7899
+cam_long = 130.696874
+cam_lat = 32.83127
 
 # data model
 

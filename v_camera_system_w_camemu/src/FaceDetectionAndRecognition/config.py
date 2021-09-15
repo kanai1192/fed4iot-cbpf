@@ -29,12 +29,15 @@ pana_cam_no = "pana_1/"
 pana_cam_url = 'http://192.168.11.160:8080/nphMotionJpeg?Resolution=640x360&Quality=Standar'
 
 #location_name = 'tokyo'
-location_name = 'murcia'
+#location_name = 'murcia'
 #location_name = 'grasse'
+location_name = 'kumamoto'
+
+data_provider = location_name
 
 # setting GPS
-cam_long = 130.7425
-cam_lat = 32.7899
+cam_long = 130.696874
+cam_lat = 32.83127
 
 # data model
 
@@ -56,7 +59,7 @@ cbpf_data_model = {'@context': {
                         'location': {'type': 'GeoProperty', 'value': [cam_lat, cam_long]},
                         'createdAt': {'type': 'Property', 'value': 'null'},
                         #'soruce': {'type': 'Property', 'value': pana_cam_url},
-                        'dataProvider': {'type': 'Property', 'value': 'null'},
+                        'dataProvider': {'type': 'Property', 'value': data_provider},
                         'entityVesrion': {'type': 'Property', 'value': '1.0'},
                         'deviceModel': {'type': 'Relationship', 'value': 'WV-S1131'},
                         'description': {'type': 'Property', 'value': 'panasonic network camera'},
