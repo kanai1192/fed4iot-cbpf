@@ -10,7 +10,7 @@ from logging import basicConfig, getLogger, INFO
 basicConfig(level=INFO)
 logger = getLogger(__name__)
 
-testImgName = "test.jpg"
+testImgName = "test_request2.jpg"
 
 CONTROL_BROKER = "133.9.250.209:9092"
 CONTROL_TOPIC = "control_in"

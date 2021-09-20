@@ -14,14 +14,14 @@ from protocol import kafka
 #####
 
 #BROKER = "192.168.11.101:9092"
-#BROKER = "133.9.250.209:9092"
-BROKER = "133.9.250.211:9092"
+BROKER = "133.9.250.209:9092"
+#BROKER = "133.9.250.211:9092"
 #BROKER = "133.9.250.228:9092"
-#TOPIC_SUB = "tvf_log_out"
+TOPIC_SUB = "tvf_log_out"
 
 if __name__ == '__main__':
 
-    TOPIC_SUB = sys.argv[1]
+    #TOPIC_SUB = sys.argv[1]
 
     kafkaBroker = kafka.kafkaConnect(BROKER)
 
@@ -34,10 +34,12 @@ if __name__ == '__main__':
 
         rxData = message.value.decode()
         rxData = json.loads(rxData)
-        print (json.dumps(rxData,indent=2))
+        #print (json.dumps(rxData,indent=2))
 
-        #content = rxData['content']
-        #metric_log = content.pop('metric')
+        content = rxData['content']
+        metric_log = content.pop('metric')
+
+        print (content['service id'], content['delay']['get time'], content['delay']['proc time'], content['delay']['pub time'])
 
         #print (json.dumps(content,indent=2))
 

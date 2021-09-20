@@ -27,7 +27,7 @@ LOG_TOPIC = "tvf_log_out"
 TIMEOUT = 10000
 
 ImgDir = './test_seq_mini/'
-NUM = 10
+NUM = 1
 
 basicConfig(level=INFO)
 logger = getLogger(__name__)
@@ -47,7 +47,7 @@ cbpf_data_model = {'@context': {
                         'location': {'type': 'GeoProperty', 'value': geometry},
                         'createdAt': {'type': 'Property', 'value': 'null'},
                         'source': {'type': 'Property', 'value': 'null'},
-                        'dataProvider': {'type': 'Property', 'value': 'waseda'},
+                        'dataProvider': {'type': 'Property', 'value': 'tokyo'},
                         'entityVesrion': {'type': 'Property', 'value': '1.0'},
                         'deviceModel': {'type': 'Relationship', 'value': 'WV-S1131'},
                         'description': {'type': 'Property', 'value': 'panasonic network camera'},

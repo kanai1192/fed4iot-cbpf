@@ -3,6 +3,7 @@ import requests
 import json
 import base64
 import sys
+import time
 
 headers = {
         'accept': "application/json",
@@ -68,9 +69,12 @@ def main():
     
     print (url)
 
+    ts1 = time.time()
     response = requests.request("POST", url, headers=headers, data = json.dumps(payload))
+    ts2 = time.time()
 
     print(response.text.encode('utf8'))
+    print ("response time {}".format(ts2-ts1))
 
 if __name__ == '__main__':
 

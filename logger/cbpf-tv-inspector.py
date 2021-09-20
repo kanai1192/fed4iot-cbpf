@@ -31,15 +31,19 @@ if __name__ == '__main__':
     consumer = kafka.kafkaSubContent(BROKER, TOPIC_SUB)
     print ("[main] subscribe topic {}".format(TOPIC_SUB))
 
+    count = 0
+
     for message in consumer:
 
         rxData = message.value.decode()
         rxData = json.loads(rxData)
 
         if len(rxData['log']) == 3:
-            print (rxData['id'], rxData['type'], rxData['log'][0], rxData['log'][1], rxData['log'][2])
+            print (count, rxData['id'], rxData['type'], rxData['log'][0], rxData['log'][1], rxData['log'][2])
+            count = count + 1
         else:
-            print (rxData['id'], rxData['type'], rxData['log'][0])
+            print (count, rxData['id'], rxData['type'], rxData['log'][0])
+            count = count + 1
 
         """
         kafka_metrics = consumer.metrics()

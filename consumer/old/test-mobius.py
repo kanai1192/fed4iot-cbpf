@@ -8,21 +8,23 @@ import base64
 #url = "http://192.168.11.101:31910/Mobius/helloworldtv:Lamp01/helloworldtv:Lamp01/set-color"
 #url = "http://192.168.11.101:31910/Mobius/cbpfact:tokyo:01/cbpfact:tokyo:01/start"
 
-url = "http://192.168.11.101:31910/Mobius/cbpf:tokyo:01/cbpf:tokyo:01/msg"
+url = "http://192.168.11.101:31910/Mobius/cbpf-logger:tokyo:01/cbpf-logger:tokyo:01/msg?rcn=4"
 
 #url = "http://192.168.11.101:31910/Mobius/cbpfact:tokyo:01"
 
 #url = "http://192.168.11.101:31910/Mobius/helloworldtv:Lamp01"
 
+"""
 testImg = "../test_tool/test.jpg"
 
 with open(testImg, 'rb') as f:
     srcImg = f.read()
+"""
 
-binImg = base64.b64encode(srcImg).decode('utf-8')
-params = {"content": {"value": binImg},
-          "file name": {"value": testImg}}
-
+#binImg = base64.b64encode(srcImg).decode('utf-8')
+#params = {"content": {"value": binImg},
+#          "file name": {"value": testImg}}
+"""
 payload = {
     "m2m:cin": {
         "con": {
@@ -34,7 +36,7 @@ payload = {
 				}
     }
 }
-
+"""
 
 headers = {
         'accept': "application/json",
@@ -43,7 +45,6 @@ headers = {
         'content-type': "application/vnd.onem2m-res+json;ty=4",
         'cache-control': "no-cache",
 }
-
 
 #response = requests.request("POST", url, headers=headers, data = json.dumps(payload))
 response = requests.request("GET", url, headers=headers)

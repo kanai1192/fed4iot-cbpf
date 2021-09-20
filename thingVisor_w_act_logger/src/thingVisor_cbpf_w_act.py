@@ -114,7 +114,7 @@ class mqttDataThread(Thread):
 
                     context_vThing.update([ngsiLdEntity1])
                     message = {"data": [ngsiLdEntity1], "meta": {"vThingID": v_thing_ID}}
-                    print("topic name: " + v_thing_topic + '/' + data_out_suffix + " ,message: " + json.dumps(message))
+                    #print("topic name: " + v_thing_topic + '/' + data_out_suffix + " ,message: " + json.dumps(message))
 
                     ts3 = time.time()
                     mqtt_data_client.publish(v_thing_topic + '/' + data_out_suffix,json.dumps(message))
@@ -122,6 +122,7 @@ class mqttDataThread(Thread):
 
                     tv_log_info = {"id": v_thing_ID, "type": "data logger", "log": [ts2-ts1, ts4-ts3, ts4-ts1]}
                     kafka_broker.send(KAFKA_TOPIC, json.dumps(tv_log_info).encode('utf-8'))
+                    print (tv_log_info)
 
                 else:
                     print ("there is no data")
@@ -242,6 +243,7 @@ class mqttDataThread(Thread):
 
         tv_log_info = {"id": id_LD, "type": "cmd logger", "log": [(ts2-ts1), (ts4-ts3), (ts4-ts1)]}
         kafka_broker.send(KAFKA_TOPIC, json.dumps(tv_log_info).encode('utf-8'))
+        print (tv_log_info)
 
         # publish command result
         if "cmd-qos" in cmd_info:
@@ -269,6 +271,7 @@ class mqttDataThread(Thread):
 
         tv_log_info = {"id": id_LD, "type": "cmd logger", "log": [(ts2-ts1)]}
         kafka_broker.send(KAFKA_TOPIC, json.dumps(tv_log_info).encode('utf-8'))
+        print (tv_log_info)
 
         #print ("close camera system")
         #cmd_close = "/face_rec=close"
