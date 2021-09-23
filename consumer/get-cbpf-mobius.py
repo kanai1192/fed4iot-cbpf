@@ -4,6 +4,7 @@ import json
 import base64
 import sys
 import time
+import ast
 
 SLEEP = 5
 
@@ -43,6 +44,7 @@ def main():
 
     end_point = "http://"+vsilo_ip+":"+vsilo_port+"/Mobius/"+v_thing_name+"/"+v_thing_name
     url = end_point + "/msg?rcn=4"
+    #url = end_point + "/createdAt?rcn=4"
 
     print (end_point)
     print (url)
@@ -58,7 +60,8 @@ def main():
         ts2 = time.time()
 
         if (count == 0):
-            print(response.text.encode('utf8'))
+            dict_data = ast.literal_eval(response.text)
+            print (json.dumps(dict_data, indent=2))
         else:
             pass
         print("count response time {} {}".format(count, (ts2-ts1)))
