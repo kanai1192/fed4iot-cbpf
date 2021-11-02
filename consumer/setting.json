@@ -6,5 +6,5 @@
   "influxdb port": "8086",
   "influxdb user": "admin",
   "influxdb pass": "admin",
-  "influxdb database": "cpbpf_app"
+  "influxdb database": "cbpf_app"
 }

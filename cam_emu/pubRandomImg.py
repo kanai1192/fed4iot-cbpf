@@ -13,7 +13,7 @@ from logging import basicConfig, getLogger, INFO
 
 geometry = [35.7058879, 139.7060483]
 
-SLEEP = 15
+SLEEP = 5
 SIZE = 100
 
 #DATA_BROKER = "116.94.156.122:9092"
