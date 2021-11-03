@@ -54,8 +54,8 @@ if __name__ == '__main__':
     #os.environ['TOPIC'] = "kafka:/humandetector/tokyo.01"
     #os.environ['TAG'] = "person"
     #os.environ['TAR'] = "yolo"
-    #os.environ['BROKER'] = '133.9.250.211:9092'
-    #os.environ['CONTROL'] = '133.9.250.209:9092'
+    #os.environ['BROKER'] = ''
+    #os.environ['CONTROL'] = ''
     #os.environ['SERVICE'] = 'humandetector'
     #os.environ['CLUSTER'] = 'slab'
     #os.environ['PROTOCOL'] = 'kafka'

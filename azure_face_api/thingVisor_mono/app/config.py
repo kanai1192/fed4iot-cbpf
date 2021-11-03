@@ -36,9 +36,8 @@ except Exception as e:
     print("Error: Parameters not found", e)
     exit()
 
-# pana_cam_url = 'http://fed4iot:Fed4IoT-JP$@192.168.11.160:80/nphMotionJpeg?Resolution=640x360&Quality=Standar'
 # pana_cam_url = 'http://192.168.11.160:80/nphMotionJpeg?Resolution=640x360&Quality=Standar'
-# pana_cam_url = 'http://133.9.96.57:65535/nphMotionJpeg?Resolution=640x360&Quality=Standar'
+
 # pana_cam_ip = os.environ['panaCamIP']
 pana_cam_ip = parameters['pana_cam_ip']
 # pana_cam_port = os.environ['panaCamPort']

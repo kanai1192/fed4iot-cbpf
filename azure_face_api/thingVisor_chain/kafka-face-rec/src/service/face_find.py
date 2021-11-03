@@ -14,12 +14,10 @@ import datetime
 from common import common
 
 # This key will serve all examples in this document.
-#KEY = "6dddf85ffb3445f288d01cb8a1d0457b"
-KEY = "90b3d7807d914a26a581c08ab0a82ba5"
+KEY = ""
 
 # This endpoint will be used in all examples in this quickstart.
-#ENDPOINT = "https://fed4iot.cognitiveservices.azure.com/"
-ENDPOINT = "https://fed4iot-face-api.cognitiveservices.azure.com/"
+ENDPOINT = ""
 
 # Create an authenticated FaceClient.
 face_client = FaceClient(ENDPOINT, CognitiveServicesCredentials(KEY))

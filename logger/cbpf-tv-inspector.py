@@ -13,10 +13,7 @@ from logging import basicConfig, getLogger, DEBUG, INFO
 from protocol import kafka
 #####
 
-#BROKER = "192.168.11.101:9092"
-BROKER = "133.9.250.209:9092"
-#BROKER = "133.9.250.211:9092"
-#BROKER = "133.9.250.228:9092"
+BROKER = ""
 #TOPIC_SUB = "tvf_log_out"
 
 if __name__ == '__main__':
