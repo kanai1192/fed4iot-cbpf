@@ -1,6 +1,43 @@
 # fed4iot-cbpf-pana
 
-## Require packages
+### Test Docker images as a ThingVisor
+
+### Camera Virtualization ThingVisor
+
+1. thingvisor: simple thingvisor for cbpf (no actuation, no logging)
+2. thingvisor_w_act: thingvisor for cbpf with actuation (no logging)
+3. thingvisor_w_act_logger: thingvisor for dbpf with actuation and logging (for debugging)
+
+#### Build docker image
+
+```bash
+$cd ThingVisor_cbpf/thingvisor_w_act
+$docker build -t <image name> .
+```
+#### Deploy VirIoT environment
+First, specify docker image name in yaml  
+
+```bash
+$docker push <image name>
+$python3 f4i.py add-thingvisor -c http://<master ip>:<master port> -y thingVisor-cbpf-w-act.yaml -n cbpf-vcam -d "cbpf thingvisor for camera virtualization system" -p "{'vThingName': <vThingName>, 'vThingType': <vThingType>, 'cameraEndpoint': <end_point>, 'caServer': <end_point>, 'requestRate': <request rate>}" -z <zone>
+```
+
+### Monolithic ThingVisor
+```bash
+$cd ThingVisor_cbpf/thingvisor_mono
+$docker build -t <image name> .
+```
+#### Deploy VirIoT environment
+First, specify docker image name in yaml  
+
+```bash
+$docker push <image name>
+$python3 f4i.py add-thingvisor -c http://<master ip>:<master port> -y thingVisor-cbpf-monolithic.yaml -n cbpf -d "CBPF Monolithic ThingVisor" -p '{"pana_cam_ip": <camera ip>, "pana_cam_port": <camera port>, "AZURE_KEY": <face key>, "ENDPOINT": <face api endpoint>}'
+```
+
+## Test local environment
+
+### Require packages
 ```bash
 $pip3 install pillow
 $pip3 install azure-cognitiveservices-vision-face
@@ -9,20 +46,20 @@ $pip3 install Werkzeug
 $pip3 install flask
 ```
 
-## Create directory
+### Create directory
 ```bash
-$cd ~/fed4iot-cbpf-pana/src/FaceDetectionAndRecognition/
+$cd cd fed4iot-cbpf-pana/src/FaceDetectionAndRecognition/
 $mkdir image/find_image
 $mkdir image/temp_image
 $mkdir cache
 ```
 
-## Usage  
+### Usage  
 ```bash
 $cd ~/fed4iot-cbpf-pana/src/FaceDetectionAndRecognition  
 $python3 restapi_main.py
 ```
-## Test script (for TV side)
+### Test script (for TV side)
 ```bash
 $cd ~/fed4iot-cbpf-pana/test_tool/
 $python3 test_cbpf.py start
@@ -94,3 +131,9 @@ $python3 test_cbpf.py <cmd>
   }
 }
 ```
+
+## other codes
+
+1. v_camera_system: virtual camera system for detecting human using FaceAPI and Panasonic camera
+2. py_face_rec: python codes for detecting human using https://github.com/ageitgey/face_recognition
+3. other useful tools

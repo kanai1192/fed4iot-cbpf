@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: f4i-tv-cbpf-pana
-        image: kanai1192/tv-cbpf-pana
+        image: <docker image name>
         ports:
         - containerPort: 8089
 ---
