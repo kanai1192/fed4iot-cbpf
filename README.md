@@ -1,4 +1,4 @@
-# fed4iot-cbpf-pana
+# fed4iot-cbpf
 
 ## Test Docker images as a ThingVisor
 
