@@ -48,7 +48,7 @@ $pip3 install flask
 
 ### Create directory
 ```bash
-$cd cd fed4iot-cbpf-pana/src/FaceDetectionAndRecognition/
+$cd v_camera_system/src/FaceDetectionAndRecognition/
 $mkdir image/find_image
 $mkdir image/temp_image
 $mkdir cache
@@ -56,12 +56,12 @@ $mkdir cache
 
 ### Usage  
 ```bash
-$cd ~/fed4iot-cbpf-pana/src/FaceDetectionAndRecognition  
+$cd v_camera_system/src/FaceDetectionAndRecognition  
 $python3 restapi_main.py
 ```
 ### Test script (for TV side)
 ```bash
-$cd ~/fed4iot-cbpf-pana/test_tool/
+$cd other_tools/test_tool/
 $python3 test_cbpf.py start
 (start camera system)
 $python3 test_cbpf.py upload 
